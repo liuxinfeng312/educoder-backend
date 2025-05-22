@@ -42,8 +42,28 @@ public class User {
     @JsonManagedReference // 防止循环引用
     private List<Submission> submissions;
 
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    @JsonManagedReference // 防止循环引用
+    private List<Post> posts;
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    @JsonManagedReference // 防止循环引用
+    private List<Reply> replies;
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    @JsonManagedReference // 防止循环引用
+    private List<Document> documents;
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    @JsonManagedReference // 防止循环引用
+    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
+    @JsonManagedReference // 防止循环引用
+    private List<CodeReview> codeReviews;
+
     public enum Role {
-        STUDENT, TEACHER, Admin
+        STUDENT, TEACHER, Admin  // 修改为全大写：STUDENT, TEACHER, ADMIN
     }
 
     @PrePersist
@@ -80,4 +100,14 @@ public class User {
     public void setProblems(List<Problem> problems) { this.problems = problems; }
     public List<Submission> getSubmissions() { return submissions; }
     public void setSubmissions(List<Submission> submissions) { this.submissions = submissions; }
+    public List<Post> getPosts() { return posts; }
+    public void setPosts(List<Post> posts) { this.posts = posts; }
+    public List<Reply> getReplies() { return replies; }
+    public void setReplies(List<Reply> replies) { this.replies = replies; }
+    public List<Document> getDocuments() { return documents; }
+    public void setDocuments(List<Document> documents) { this.documents = documents; }
+    public List<Comment> getComments() { return comments; }
+    public void setComments(List<Comment> comments) { this.comments = comments; }
+    public List<CodeReview> getCodeReviews() { return codeReviews; }
+    public void setCodeReviews(List<CodeReview> codeReviews) { this.codeReviews = codeReviews; }
 }

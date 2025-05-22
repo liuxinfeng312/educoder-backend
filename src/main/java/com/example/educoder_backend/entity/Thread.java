@@ -7,8 +7,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-@Table(name = "posts")
-public class Post {
+@Table(name = "threads")
+public class Thread {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,9 +29,9 @@ public class Post {
     private int likes;
 
     @ManyToOne
-    @JoinColumn(name = "author_id", nullable = false)
-    @JsonBackReference // 防止循环引用
-    private User author;
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
+    private User user;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
@@ -38,13 +39,9 @@ public class Post {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    @JsonManagedReference // 防止循环引用
-    private List<Reply> replies;
-
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    @JsonManagedReference // 防止循环引用
-    private List<CodeReview> codeReviews;
+    @OneToMany(mappedBy = "thread", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Response> responses;
 
     @PrePersist
     protected void onCreate() {
@@ -70,14 +67,12 @@ public class Post {
     public void setViews(int views) { this.views = views; }
     public int getLikes() { return likes; }
     public void setLikes(int likes) { this.likes = likes; }
-    public User getAuthor() { return author; }
-    public void setAuthor(User author) { this.author = author; }
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
     public LocalDateTime getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
-    public List<Reply> getReplies() { return replies; }
-    public void setReplies(List<Reply> replies) { this.replies = replies; }
-    public List<CodeReview> getCodeReviews() { return codeReviews; }
-    public void setCodeReviews(List<CodeReview> codeReviews) { this.codeReviews = codeReviews; }
+    public List<Response> getResponses() { return responses; }
+    public void setResponses(List<Response> responses) { this.responses = responses; }
 }
